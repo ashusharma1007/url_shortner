@@ -7,7 +7,7 @@ import (
 
 func RegisterRoutes() {
 	http.HandleFunc("/", HandleForm)
-	http.HandleFunc("/shorten", HandleShorten)
+	http.HandleFunc("POST /shorten", HandleShorten)
 	http.HandleFunc("/short/", HandleRedirect)
 	// http.HandleFunc("/Getlinks", handleLinks)
 

@@ -15,7 +15,7 @@ func HandleForm(w http.ResponseWriter, r *http.Request) {
 
 	// Serve the HTML form
 	w.Header().Set("Content-Type", "text/html")
-	fmt.Fprint(w, `0
+	fmt.Fprint(w, `
 		<head>
 			<title>URL Shortener</title>
 		</head>

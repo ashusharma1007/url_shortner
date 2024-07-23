@@ -13,11 +13,6 @@ func HandleShorten(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		fmt.Print("Error found")
-		return
-	}
 
 	originalURL := r.FormValue("url")
 	if originalURL == "" {
