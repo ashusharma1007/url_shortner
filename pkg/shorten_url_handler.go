@@ -2,7 +2,6 @@ package pkg
 
 import (
 	"database/sql"
-	"errors"
 	"fmt"
 	"net/http"
 
@@ -12,12 +11,13 @@ import (
 func HandleShorten(w http.ResponseWriter, r *http.Request) {
 	db, err := sql.Open("sqlite3", "./urls.db")
 	if err != nil {
-		fmt.Println(errors.New("problem in starting the db"), err)
+		fmt.Println("problem in starting the db", err)
 	}
 
 	originalURL := r.FormValue("url")
 	if originalURL == "" {
-		fmt.Print(errors.New("url paramter is missing"))
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintln(w, "url is missing")
 		return
 	}
 

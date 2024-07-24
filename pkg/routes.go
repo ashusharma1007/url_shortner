@@ -12,5 +12,9 @@ func RegisterRoutes() {
 	// http.HandleFunc("/Getlinks", handleLinks)
 
 	fmt.Println("URL Shortener is running on :3030")
-	http.ListenAndServe(":3030", nil)
+	err := http.ListenAndServe(":3030", nil)
+	if err != nil {
+		// TODO: Handle specific errors.
+		fmt.Println("server is not runnning", err)
+	}
 }

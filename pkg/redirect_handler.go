@@ -1,7 +1,6 @@
 package pkg
 
 import (
-	"errors"
 	"fmt"
 	"net/http"
 	"strings"
@@ -22,10 +21,13 @@ func HandleRedirect(w http.ResponseWriter, r *http.Request) {
 	originalURL, found := urls[shortKey]
 
 	if !found {
-		fmt.Println(errors.New("shortened key not found"))
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprintln(w, "url not found")
 		return
 	}
 
-	// Redirect the user to the original URL
-	http.Redirect(w, r, originalURL, http.StatusMovedPermanently)
+	// Redirect the user to the original URLa
+	// http.Redirect(w, r, originalURL, http.StatusMovedPermanently)
+	w.Header().Set("Location", originalURL)
+	w.WriteHeader(http.StatusMovedPermanently)
 }

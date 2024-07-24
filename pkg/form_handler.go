@@ -8,11 +8,6 @@ import (
 )
 
 func HandleForm(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		http.Redirect(w, r, "/shorten", http.StatusSeeOther)
-		return
-	}
-
 	// Serve the HTML form
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprint(w, `
