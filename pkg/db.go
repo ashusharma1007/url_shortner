@@ -1,6 +1,8 @@
 package pkg
 
 import (
+	"database/sql"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -10,12 +12,12 @@ type UrlDb struct {
 	ShortenUrl  string
 }
 
-func SetupDatabase() error {
+func SetupDatabase(db *sql.DB) error {
 	_, err := db.Exec("CREATE TABLE IF NOT EXISTS URLS (original_url TEXT, short_url TEXT)")
 	return err
 }
 
-func AddUrl(oU string, sU string) error {
+func AddUrl(db *sql.DB, oU string, sU string) error {
 	_, err := db.Exec(`INSERT INTO URLS (original_url, short_url) VALUES (?,?);`, oU, sU)
 	return err
 }

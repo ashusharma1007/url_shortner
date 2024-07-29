@@ -1,13 +1,14 @@
 package pkg
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 )
 
-func RegisterRoutes() {
+func RegisterRoutes(db *sql.DB) {
 	http.HandleFunc("/", HandleForm)
-	http.HandleFunc("POST /shorten", HandleShorten)
+	http.HandleFunc("POST /shorten", HandleShortenMaker(db))
 	http.HandleFunc("/short/", HandleRedirect)
 	// http.HandleFunc("/Getlinks", handleLinks)
 
