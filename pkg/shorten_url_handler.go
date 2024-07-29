@@ -3,24 +3,10 @@ package pkg
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"net/http"
 
 	_ "github.com/mattn/go-sqlite3"
 )
-
-var db *sql.DB
-
-func init() {
-	var err error
-	db, err = sql.Open("sqlite3", "./urls.db")
-	if err != nil {
-		log.Fatal(err)
-	}
-	if err = db.Ping(); err != nil {
-		log.Fatal(err)
-	}
-}
 
 func HandleShortenMaker(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +25,11 @@ func HandleShortenMaker(db *sql.DB) http.HandlerFunc {
 		// Construct the full shortened URL
 		shortenedURL := fmt.Sprintf("http://localhost:3030/short/%s", shortKey)
 		// add short url with original url in the table
-		AddUrl(db, originalURL, shortenedURL)
+		err := AddUrl(db, originalURL, shortenedURL)
+		if err != nil {
+			fmt.Println("problem in making entries in the table", err)
+			return
+		}
 		// Serve the result page
 		w.Header().Set("Content-Type", "text/html")
 		fmt.Fprint(w, `
